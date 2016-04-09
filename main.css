@@ -1,0 +1,49 @@
+.popup {
+  position: absolute;
+  text-align: center;
+  /*width: 80px;*/
+  width: 320px;
+  height: 12px;
+  padding: 8px;
+  margin-top: -20px;
+  font: 10px sans-serif;
+  background: #ddd;
+  pointer-events: none;
+}
+
+.popup-arrow {
+  padding-top: 5px;
+  color: #ddd;
+  position: absolute;
+  text-align: left;
+  font-size: 20px;
+}
+
+/*.popup.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}*/
+
+.bar {
+  fill: lightsteelblue;
+}
+
+.bar:hover {
+  fill: steelblue;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
