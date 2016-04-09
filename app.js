@@ -10,7 +10,7 @@ var legendItems = [
   {name:'Rectangle', color:'red', style:'rect' }, 
   {name:'Circle', color:'orange', style:'circle' },
   {name:'Circle with Line', color:'blue', style:'lined-circle' },
-  {name:'Line', color:'blue', style:'line' }
+  {name:'Line', color:'limegreen', style:'line' }
 ];
 
 
@@ -141,8 +141,9 @@ window.onload = function() {
 
   // Reposition and resize the box
   var lbbox = li[0][0].getBBox()  
-  lb.attr("x",(lbbox.x-legendPadding))
-      .attr("y",(lbbox.y-legendPadding))
+
+  lb.attr("x",(lbbox.x-legendPadding)) // use to position legend, consider dynamic positioning
+      .attr("y",(lbbox.y-legendPadding)) // use to position legend
       .attr("height",(lbbox.height+2*legendPadding))
       .attr("width",(lbbox.width+2*legendPadding));
 
