@@ -7,9 +7,10 @@ var data = [
 ];
 
 var legendItems = [
-  {name:'Letter', color:'red', style:'rect' }, 
-  {name:'Test', color:'orange', style:'circle' },
-  {name:'Test-2', color:'blue', style:'lined-circle' }
+  {name:'Rectangle', color:'red', style:'rect' }, 
+  {name:'Circle', color:'orange', style:'circle' },
+  {name:'Circle with Line', color:'blue', style:'lined-circle' },
+  {name:'Line', color:'blue', style:'line' }
 ];
 
 
@@ -106,7 +107,6 @@ window.onload = function() {
       .attr("x","1em") // use to position text
       .text(function(d) { return d.value.name; });
 
-  
   li.selectAll("rect")
       .data(items,function(d) { return d.key})
       .call(function(d) { d.enter().append("rect")})
@@ -137,7 +137,7 @@ window.onload = function() {
       .attr("y1",function(d,i) { return i-0.25+"em"}) // use to position line
       .attr("y2",function(d,i) { return i-0.25+"em"}) // use to position line
       .style("stroke",function(d) { return d.value.color})
-      .style("opacity",function(d) { return ( d.value.style == 'lined-circle' ) ? 1 : 0 });
+      .style("opacity",function(d) { return ( d.value.style == 'line' || d.value.style == 'lined-circle' ) ? 1 : 0 });
 
   // Reposition and resize the box
   var lbbox = li[0][0].getBBox()  
