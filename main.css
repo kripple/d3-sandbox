@@ -19,11 +19,11 @@
   font-size: 20px;
 }
 
-/*.popup.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}*/
+.legend > rect {
+  fill:white;
+  stroke:black;
+  opacity:0.8;
+}
 
 .bar {
   fill: lightsteelblue;

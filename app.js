@@ -6,6 +6,14 @@ var data = [
   {letter:'E', frequency:.12702}
 ];
 
+var legendItems = [
+  {name:'Letter', color:'red', style:'rect' }, 
+  {name:'Test', color:'orange', style:'circle' },
+  {name:'Test-2', color:'blue', style:'lined-circle' }
+];
+
+
+
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
 width = 500 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom;
@@ -16,8 +24,6 @@ var x = 0;
 var y = 0;
 
 window.onload = function() {
-
-  
 
   x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -76,6 +82,72 @@ window.onload = function() {
     .on('mouseover', displayPopup)
     .on('mouseout', hidePopup);
 
+  ///////////////////////////////////////////////////////////
+
+  legend = svg.append("g")
+    .attr("class","legend")
+    .attr("transform","translate(50,30)")
+    .style("font-size","12px");
+    
+  var items = d3.entries(legendItems);
+  var legendPadding = 5;
+
+  var lb = legend.selectAll(".legend-box").data([true]);
+  var li = legend.selectAll(".legend-items").data([true]);
+
+  lb.enter().append("rect").classed("legend-box",true);
+  li.enter().append("g").classed("legend-items",true);
+
+  li.selectAll("text")
+      .data(items,function(d) { return d.key})
+      .call(function(d) { d.enter().append("text")})
+      .call(function(d) { d.exit().remove()})
+      .attr("y",function(d,i) { return i+"em"}) // use to position text
+      .attr("x","1em") // use to position text
+      .text(function(d) { return d.value.name; });
+
+  
+  li.selectAll("rect")
+      .data(items,function(d) { return d.key})
+      .call(function(d) { d.enter().append("rect")})
+      .call(function(d) { d.exit().remove()})
+      .attr("x",-4) // use to position rects
+      .attr("y",function(d,i) { return i-0.6+"em"}) // use to position rects
+      .attr("height",'8px') // use to size rects
+      .attr("width",'8px') // use to size rects
+      .style("fill",function(d) { return d.value.color})
+      .style("opacity",function(d) { return ( d.value.style == 'rect' ) ? 1 : 0 });
+
+  li.selectAll("circle")
+      .data(items,function(d) { return d.key})
+      .call(function(d) { d.enter().append("circle")})
+      .call(function(d) { d.exit().remove()})
+      .attr("cy",function(d,i) { return i-0.25+"em"}) // use to position circles
+      .attr("cx",0) // use to position circles
+      .attr("r","0.4em") // use to size circles
+      .style("fill",function(d) { return d.value.color})
+      .style("opacity",function(d) { return ( d.value.style == 'circle' || d.value.style == 'lined-circle' ) ? 1 : 0 });
+
+  li.selectAll("line")
+      .data(items,function(d) { return d.key})
+      .call(function(d) { d.enter().append("line")})
+      .call(function(d) { d.exit().remove()})
+      .attr("x1",-8) // use to position line
+      .attr("x2",8) // use to position line
+      .attr("y1",function(d,i) { return i-0.25+"em"}) // use to position line
+      .attr("y2",function(d,i) { return i-0.25+"em"}) // use to position line
+      .style("stroke",function(d) { return d.value.color})
+      .style("opacity",function(d) { return ( d.value.style == 'lined-circle' ) ? 1 : 0 });
+
+  // Reposition and resize the box
+  var lbbox = li[0][0].getBBox()  
+  lb.attr("x",(lbbox.x-legendPadding))
+      .attr("y",(lbbox.y-legendPadding))
+      .attr("height",(lbbox.height+2*legendPadding))
+      .attr("width",(lbbox.width+2*legendPadding));
+
+
+
   barwidth = x.rangeBand();
 
   function displayPopup(popupData) {
@@ -98,8 +170,6 @@ window.onload = function() {
 
     for( var i = 0; i < data.length; i++ ) {
       if(popupData.letter == data[i].letter) {
-        // arrowLeft = x(data[i].letter);
-        // arrowLeft = ((i+1) * barwidth) - margin.left;
         arrowLeft = i * chunk; // 0 -> 320(width of popup) + 8(popup padding)
       }
     }
@@ -107,7 +177,6 @@ window.onload = function() {
     div
       .style('opacity',0.9)
       .html('<div>Frequency: ' + (Math.floor(popupData.frequency * 100)).toString() + "%</div><div class='popup-arrow'>&#x25BC;</div>")
-      // .attr('width', width - ( 2 * (margin.left + margin.right)) + 'px')
       .style("left", left.toString() + "px")
       .style("top", top.toString() + "px");
 
