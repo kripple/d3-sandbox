@@ -11,6 +11,15 @@
   pointer-events: none;
 }
 
+.expandable-box {
+  position: absolute;
+  text-align: left;
+  width: 200px;
+  font: 10px sans-serif;
+  background: #aaa;
+  border: 1px solid black;
+}
+
 .popup-arrow {
   padding-top: 5px;
   color: #ddd;
@@ -25,13 +34,19 @@
   opacity:0.8;
 }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
 .bar {
   fill: lightsteelblue;
 }
 
-.bar:hover {
+/*.bar:hover {
   fill: steelblue;
-}
+}*/
 
 .axis {
   font: 10px sans-serif;
